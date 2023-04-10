@@ -1,4 +1,4 @@
-### How to run the Backend service ?
+# How to run the Backend service ?
 ## Get the latest update from the project folder
 
 ```cmd
@@ -39,3 +39,6 @@ If successful, you should see this in terminal
 Server listening on port 3001
 Connected to MongoDB
 ```
+
+## Don't forget to close the connection if we don't use the database.
+Fastest way is to type CMD + C twice in our terminal 
