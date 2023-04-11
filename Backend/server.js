@@ -3,8 +3,12 @@ dotenv.config();
 const express = require('express');
 const mongoose = require('mongoose');
 
+
+
+const db = mongoose.connection;
 const app = express();
-const port = 3001;
+const port = 3008;
+
 
 mongoose.connect(process.env.MONGO_URL, {
     auth: {
@@ -13,16 +17,20 @@ mongoose.connect(process.env.MONGO_URL, {
     },
     useNewUrlParser: true,
     useUnifiedTopology: true
-});
+}), () => {
+  console.log("HELO");
+};
 
-const db = mongoose.connection;
+
+const drink = mongoose.model
+
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Connected to MongoDB');
 });
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+console.log("hi");
 });
 
 app.listen(port, () => {
