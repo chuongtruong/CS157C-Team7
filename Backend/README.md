@@ -7,6 +7,8 @@
 
 ## In the Backend folder, install all dependencies
 
+Install nodeJS if you haven't done.
+
 ```
    cd Backend/
    npm install
@@ -30,7 +32,7 @@
 ## Run the backend service
 
 ```
-   node server.js
+   npm run dev
 ```
 
 If successful, you should see this in terminal
@@ -40,5 +42,9 @@ Server listening on port 3001
 Connected to MongoDB
 ```
 
+The backend can be accessed at
+```
+> http://localhost:3001/posts/<name_of_endpoint>
+```
 ## Don't forget to close the connection if we don't use the database.
 Fastest way is to type CMD + C twice in our terminal 
