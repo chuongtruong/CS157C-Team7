@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, createContext } from "react";
+
+import { Grommet } from 'grommet';
+import AppLayout from './components/AppLayout/AppLayout';
+import { SocketContext, socket } from './context/socket';
+
+const theme = {
+  global: {
+    font: {
+      family: 'Roboto',
+      size: '18px',
+      height: '20px',
+    },
+  },
+}
+export const CartContext = createContext()
 
 function App() {
+  const [itemInCart, setItemInCart] = useState([]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <SocketContext.Provider value={socket}>
+      <CartContext.Provider value={[itemInCart, setItemInCart]}>
+        <Grommet theme={theme} full>
+          <AppLayout />
+        </Grommet >
+      </CartContext.Provider>
+    // </SocketContext.Provider>
   );
 }
 
