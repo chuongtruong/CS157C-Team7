@@ -2,7 +2,7 @@
 import { Box } from 'grommet';
 import { useState, useEffect } from 'react';
 import QuickActionButton from "../QuickActionButton/QuickActionButton";
-import { getAllDrinks } from '../../api/api';
+import { getAllDrinksCategories } from '../../api/api';
 
 const QuickAction = () => {
 
@@ -11,19 +11,11 @@ const QuickAction = () => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/categories")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setCategories(result);
-                },
-                (error) => {
-                    console.log("Error fetching categories");
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
+        Promise.all(getAllDrinksCategories()
+        .then(values => {
+            console.log(values);
+           setCategories(values.data)
+        }))
     }, [])
 
     return (

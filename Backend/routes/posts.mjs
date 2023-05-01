@@ -34,6 +34,19 @@ router.get("/getDrinks", async (req, res) => {
   res.send(results).status(200);
 });
 
+// Get all drinks in the Drink collection
+router.get("/getDrinksCategory", async (req, res) => {
+  let collection = await db.collection("Drink");
+  let results = await collection.distinct("category", (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(data);
+    }
+  });
+  res.send(results).status(200);
+});
+
 // Get all flavors in the Flavors collection
 router.get("/getFlavors", async function (req, res) {
   let collection = await db.collection("Flavor");
