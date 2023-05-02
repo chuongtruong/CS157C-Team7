@@ -2,12 +2,14 @@ const dotenv = require("dotenv")
 dotenv.config();
 const express = require('express');
 const mongoose = require('mongoose');
-
+const cors = require('cors');
 
 
 const mongoConnect = mongoose.connection;
 const app = express();
 const port = 3008;
+
+app.use(cors());
 
 const client = mongoose.connect(process.env.MONGO_URL,{ useNewUrlParser: true })
 .then(console.log(`MongoDB connected`))
@@ -26,6 +28,7 @@ app.get("/checkCollections", async function(req, res) {
       console.error(err);
     } else {
       console.log('Collections found:', collections.map(collection => collection.name));
+      res.send(collections.map(collection => collection.name));
     }
   })
  });
@@ -35,6 +38,7 @@ app.get("/checkCollections", async function(req, res) {
     if (err) {
       console.error(err);
     } else {
+      res.send(Object.values(data));
       for(let i =0; i < Object.values(data).length; i++){
         console.log(Object.values(data)[i].name);
       }
