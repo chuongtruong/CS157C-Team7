@@ -92,4 +92,15 @@ router.get("/getToppings", async function (req, res) {
     res.send(results).status(200);
   });
 
+
+// Create an order
+router.post("/createOrder",  (req, res) => {
+  console.log('Called');
+  console.log('Object received from request: ', req.body);
+  res.send({
+    'order_no': 123, //we wil need to generate this number automatically
+    
+  })
+})
+
 export default router;

@@ -13,7 +13,6 @@ const QuickAction = () => {
     useEffect(() => {
         Promise.all(getAllDrinksCategories()
         .then(values => {
-            console.log(values);
            setCategories(values.data)
         }))
     }, [])

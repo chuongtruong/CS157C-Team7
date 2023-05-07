@@ -1,9 +1,9 @@
 /* eslint-disable */
-import { Box, Anchor, Text, Button, Grid, Layer, Spinner } from 'grommet';
+import { Box, Anchor, Text, Grid, Layer, Spinner } from 'grommet';
 import { useEffect, useState, useContext } from 'react';
 import { CartContext } from '../../App';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Catalog, Close } from 'grommet-icons';
+import { Close } from 'grommet-icons';
 import ItemCart from '../Item/ItemCart';
 
 const Cart = ({ item }) => {
@@ -12,7 +12,7 @@ const Cart = ({ item }) => {
     const navigate = useNavigate();
     const [itemInCart, setItemInCart] = useContext(CartContext);
     const [ids, setIds] = useState([]);
-    const itemsObject = {};
+    const drinksObject = {};
     const [open, setOpen] = useState(undefined);
     const [orderNumber, setOrderNumber] = useState(undefined)
     const [successMsgOpen, setSuccessMsgOpen] = useState(undefined);
@@ -21,17 +21,18 @@ const Cart = ({ item }) => {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
-        setIds(Object.keys(itemsObject));
+        console.log("Object.keys(itemsObject) ", Object.keys(drinksObject));
+        setIds(Object.keys(drinksObject));
         return
     }, [itemInCart]);
 
     (itemInCart.forEach((item) => {
-        if (itemsObject.hasOwnProperty(item.item_Id)) {
-            itemsObject[item.item_Id]['quantity'] += 1
-            itemsObject[item.item_Id]['price'] = (item.price * itemsObject[item.item_Id]['quantity']).toFixed(2)
+        if (drinksObject.hasOwnProperty(item._id)) {
+            drinksObject[item._id]['quantity'] += 1
+            drinksObject[item._id]['price'] = (item.price * drinksObject[item._id]['quantity']).toFixed(2)
 
         } else {
-            itemsObject[item.item_Id] = {
+            drinksObject[item._id] = {
                 'name': item.name,
                 'quantity': 1,
                 'price': item.price
@@ -48,28 +49,30 @@ const Cart = ({ item }) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(itemsObject)
+            body: JSON.stringify(drinksObject)
         };
 
-        const response = await fetch(`http://localhost:5000/t=${id}/create2`, requestOptions);
+        console.log('drink objects: ',drinksObject );
+
+        const response = await fetch('http://localhost:3001/posts/createOrder', requestOptions);
 
         if (!response.ok) {
             setErrMessage(`Error! status: ${response.status}`)
         }
 
-        const result = await response.json();
+        const responseJSON = await response.json();
 
-        await setOrderNumber(result["order_no"])
+        await setOrderNumber(responseJSON["order_no"])
         setSuccessMsgOpen(true);
         await setTimeout(() => {
             setSuccessMsgOpen(undefined);
         }, 5000);
 
-        console.log('result is: ', JSON.stringify(result, null, 4));
+        console.log('response is: ', JSON.stringify(responseJSON, null, 4));
     };
 
     const closeBtnHdler = () => {
-        navigate(`/tableId=${id}/menu`);
+        navigate(`/`);
     };
 
     return (
@@ -82,7 +85,9 @@ const Cart = ({ item }) => {
                     gap='small'
                 >
                     <Box justify='center' gridArea="page-title">
-                        <Text size='xxlarge'><strong>TABLE {id}</strong></Text>
+                        <Text color='#5D5D5D' size='xxlarge'>
+                            <strong>Cart</strong>
+                        </Text>
                     </Box>
                     <Box justify='center' align='end' gridArea="close-btn">
                         <Anchor onClick={() => closeBtnHdler()}>
@@ -93,12 +98,26 @@ const Cart = ({ item }) => {
             </Box>
             <Box height={{ min: '65vh', max: '80vh' }}>
                 {
-                    (ids.map(id => (<ItemCart key={id} item={{ ...itemsObject[id], 'id': id }} />)))
+                    (ids.map(id => (<ItemCart key={id} item={{ ...drinksObject[id], 'id': id }} />)))
                 }
             </Box>
 
-            <Box >
-                <Button round='medium' primary onClick={placeOrderBtnHandler} label="Place order" />
+            <Box
+                onClick={placeOrderBtnHandler}
+                elevation='medium'
+                round='medium'
+                pad="small"
+                align='center'
+                justify='center'
+                background={{
+                    color: '#EEFFAA'
+                }}
+            >
+                <Text
+                    size='xxlarge'
+                >
+                    Pay
+                </Text>
             </Box>
             {
                 open && (
@@ -127,7 +146,7 @@ const Cart = ({ item }) => {
                             direction="row"
                             alignSelf="center"
                             pad="large"
-                        >   
+                        >
                             <Text>Order Number</Text>
                             <Text size='large'>{orderNumber}</Text>
                         </Box>

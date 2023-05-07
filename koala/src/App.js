@@ -7,9 +7,10 @@ import { SocketContext, socket } from './context/socket';
 const theme = {
   global: {
     font: {
-      family: 'Roboto',
-      size: '18px',
-      height: '20px',
+      family: 'Pacifico',
+    },
+    colors: {
+      background: '#FFFAE7', // or any other color name, hex value, or CSS color string
     },
   },
 }

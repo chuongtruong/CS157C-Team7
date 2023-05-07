@@ -1,8 +1,15 @@
 /* eslint-disable */
-import {Header, Nav, Box, Grid, Avatar, Text, PageContent} from 'grommet';
-import { Login } from 'grommet-icons';
+import {Header, Anchor, Box, Grid, Avatar, Text, PageContent, Stack,} from 'grommet';
+import { Cart } from 'grommet-icons';
+import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({itemCount}) => {
+    
+    console.log('itemCount: ', itemCount);
+    let navigate = useNavigate();
+    const cartBtnHdler = () => {
+        navigate(`/cart`)
+    }
     return(
 
         <Header
@@ -17,44 +24,59 @@ const Navbar = () => {
                 
                 <Grid
                     rows={
-                        ['', '', '','']
+                        ['', '', '']
                     }
                     columns={
                         [
-                            ['xxsmall', 'xsmall'], 
-                            ['xsmall','medium'],
-                            ['xsmall','medium'],
-                            ['xxsmall', 'xxsmall']
+                            ['1/2'], 
+                            ['large'],
+                            ['xxsmall'],
                         ]
                     }
-                    gap={{column:'small'}}
+
                     areas={[
-                    { name: 'logo', start: [0, 0], end: [0, 0] },
-                    { name: 'employeeName', start: [1,0] , end: [1,0]},
-                    { name: 'employeeID', start: [2,0] , end: [2,0]},
-                    { name: 'icon', start: [3,0] , end: [3,0]},
+                        { name: 'logo', start: [0, 0], end: [0, 0] },
+                        { name: 'shopName', start: [1,0] , end: [1,0]},
+                        { name: 'cartIcon', start: [2,0] , end: [2,0]},
                     ]}
                     fill='horizontal'
                     align='center'
                 >
                     <Box gridArea="logo"  hoverIndicator='true' >
                         <Avatar 
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpfrnYVoAEXKpHsZgYSydZC8SRgL-6XnZH_FhdR4I&s" 
+                            src="https://res.cloudinary.com/dcnrm0owf/image/upload/v1683323855/Logo_kg5tua.png" 
                             round="xsmall"
-                            />   
+                        />   
                     </Box>
-                    <Box gridArea="employeeName" align='end' >
-                        {/* <Text size='' weight='bold'>Chuong Tr</Text> */}
+                    <Box gridArea="shopName" align='center' >
+                        <Text size='30px' weight='bold'>Koala Tea</Text>
                     </Box>
 
-                    {/* TODO: Need logic to handle show/hide employee ID */}
-                    
-                    <Box gridArea="employeeID" >
-                        {/* <Text color='#808080' weight='bold'>015068898</Text> */}
-                    </Box>
-                    <Box gridArea="icon" align='end'>
-                        <Login color='plain' size='medium' /> 
-                    </Box>
+                    <Box 
+                        gridArea="cartIcon" 
+                        align='center' 
+                        direction='row' 
+                        justify='center' 
+                        gap='xsmall' 
+                        >
+                            {itemCount > 0 ? (
+                            <Box>
+                                <Text color='red'>
+                                    {itemCount}
+                                </Text>
+                            </Box>
+
+                            )
+                        :
+                            <></>
+                        }
+                        <Anchor onClick={cartBtnHdler} >
+                            <Stack>
+                                <Cart color='plain' size='30px'/>
+                            </Stack>
+                        </Anchor>
+                </Box>
+                   
                 </Grid>
             </PageContent>
             

@@ -4,8 +4,8 @@ import Navbar from "../Navbar/Navbar";
 import QuickAction from "../QuickAction/QuickAction";
 import MainSection from "../MainSection/MainSection";
 import Cart from "../Cart/Cart";
-
-import AppFooter from "../AppFooter/AppFooter";
+import { CartContext } from '../../App';
+import { useContext } from 'react';
 import { Page, PageContent } from 'grommet';
 import {
     BrowserRouter as Router,
@@ -14,17 +14,20 @@ import {
 } from "react-router-dom";
 
 const AppLayout = () => {
+    
+    const [itemInCart, setItemInCart] = useContext(CartContext)
+    console.log('length: ', itemInCart.length, itemInCart);
     return (
         <Router>
             <Page kind='narrow'>
-                <Navbar />
+                <Navbar itemCount={itemInCart.length}/>
                 <PageContent>
                     <QuickAction />
                     <Routes>
-                        <Route path="/tableID=:id/menu" element={<MainSection />}/>
+                        <Route path="/" element={<MainSection />}/>
                     </Routes>
                     <Routes>
-                        <Route path="/tableID=:id/cart" element={<Cart />}/>
+                        <Route path="/cart" element={<Cart />}/>
                     </Routes>
                 </PageContent>
             </Page>

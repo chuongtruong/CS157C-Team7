@@ -1,12 +1,12 @@
 /* eslint-disable */
 import { Box, Grid, Anchor, Text, Avatar, Stack } from 'grommet';
 import { Cart } from 'grommet-icons';
-import { useMatch, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AppFooter = ({ table_number = '1', items, itemCount }) => {
     let navigate = useNavigate();
     const cartBtnHdler = () => {
-        navigate(`/tableId=${table_number}/cart`)
+        navigate(`/cart`)
     }
     return (
         <Box

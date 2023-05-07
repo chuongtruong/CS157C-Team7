@@ -25,51 +25,16 @@ const ItemMenu = ({ data, handleCart }) => {
     const onClose = () => setOpen(undefined);
 
     return (
-
-
-        // <Grid
-        //         fill
-        //         areas={[
-        //             { name: 'close-btn', start: [0, 0], end: [0, 0] },
-        //             { name: 'name', start: [1, 0], end: [1, 0] },
-        //             { name: 'quantity', start: [2, 0], end: [2, 0] },
-        //             { name: 'price', start: [3, 0], end: [3, 0] },
-
-        //         ]}
-        //         columns={['xxsmall', 'flex', 'xxsmall', 'xxsmall']}
-        //         rows={['flex']}
-        //         gap="xsmall"
-        //         // border={'bottom'}
-        //     >
-
-        //         <Box justify='center' align='start' gridArea="close-btn">
-        //             <Anchor onClick={() => closeBtnHdler()}>
-        //                 <FormClose color='plain' size='30px' />
-        //             </Anchor>
-        //         </Box>
-        //         <Box justify='center' gridArea="name">
-        //             <Text> <strong>{id} - {name}</strong></Text>
-        //         </Box>
-        //         <Box justify='center' align='center' gridArea="quantity">
-        //             <Text>x{quantity}</Text>
-        //         </Box>
-        //         <Box justify='center' align='center' gridArea="price">
-        //             <Text>${price}</Text>
-        //         </Box>
-        //     </Grid>
-
-
-
-
         <Box
-            width='100vw'
+            width='90vw'
             height={{ min: '50px' }}
             margin={{ bottom: 'medium' }}
-            background={{ color: 'rgb(250 236 201 / 29%)' }}
+            background={{ color: '#F1F1F1' }}
             round='medium'
             pad={{ left: 'medium', right: 'medium' }}
             animation={{ type: 'fadeIn', duration: 1500 }}
             justify='center'
+            elevation="medium"
         >
             <Grid
                 fill
@@ -79,7 +44,7 @@ const ItemMenu = ({ data, handleCart }) => {
                     { name: 'calories', start: [2, 0], end: [2, 0] },
                     { name: 'add-btn', start: [3, 0], end: [4, 0] },
                 ]}
-                columns={['1/4', 'flex', 'flex', 'flex']}
+                columns={['1/4', 'flex']}
                 rows={['flex']}
                 gap="xsmall"
             // border={'bottom'}
@@ -107,46 +72,6 @@ const ItemMenu = ({ data, handleCart }) => {
                 </Box>
                 
             </Grid>
-
-
-
-
-            {/* <Grid
-            rows={
-                ['', '', '', '']
-            }
-            columns={
-                [
-                    ['xsmall', 'small'],['xsmall', 'small']
-                ]
-            }
-            gap={{ column: 'small' }}
-            areas={[
-                { name: 'item-photo', start: [0, 0], end: [1, 4] },
-                { name: 'item-name', start: [1, 0], end: [2, 0] },
-                { name: 'item-price', start: [1, 1], end: [2, 1] },
-                { name: 'item-calories', start: [3, 0], end: [3, 0] },
-            ]}
-            align='start'
-            justify='center'
-            >
-            <Box gridArea="item-photo" border={{size: 'xsmall' }} height='300px' width='200px'>
-                photo
-            </Box>
-            <Box gridArea="item-name" border={{size: 'small' }} height='100px' width='200px'>
-                <Text> name</Text>
-            </Box>
-
-            <Box gridArea="item-price" border={{size: 'medium' }} height='100px'>
-                <Text color='#808080' weight='bold'> price</Text>
-            </Box>
-
-            <Box gridArea="item-calories" border={{size: 'xsmall' }} height='100px'>
-                <Text color='#808080' weight='bold'></Text>
-            </Box>
-            
-            </Grid> */}
-
             {open && (
                 <Layer
                     position="top"
