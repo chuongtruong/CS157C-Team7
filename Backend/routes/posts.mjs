@@ -2,7 +2,7 @@ import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
-
+import fs from 'fs';
 
 const router = express.Router();
 
@@ -94,7 +94,7 @@ router.get("/getToppings", async function (req, res) {
 
 
 // Create an order
-router.post("/createOrder", async function (req, res) {
+router.post("/createOrder",  async function(req, res){
   var OrderNumber;
   fs.readFile('./readwritetesting/orderNumber.txt', function (err, data) {
     if (err) throw err;
@@ -102,21 +102,21 @@ router.post("/createOrder", async function (req, res) {
     OrderNumber = originalInt + 1;
     var newIntToString = String(OrderNumber);
     fs.writeFile('./readwritetesting/orderNumber.txt', newIntToString, function (err, data) {
-      if (err) throw err;
-      else {
-        console.log("Value updated");
-      }
+        if (err) throw err;
+        else {
+            console.log("Value updated");
+        }
     });
-    let collection = db.collection("Order");
+    let collection =  db.collection("Order");
     var orderReq = req.body;
-    orderReq._id = OrderNumber;
+    orderReq._id= OrderNumber;
     collection.insertOne(orderReq);
     console.log('Called');
     console.log('Object received from request: ', req.body);
     res.send({
       'order_no': OrderNumber, //we wil need to generate this number automatically
     })
-  })
+})
 })
 
 export default router;
