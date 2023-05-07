@@ -24,8 +24,7 @@ function App() {
       <CartContext.Provider value={[itemInCart, setItemInCart]}>
         <Grommet theme={theme} full>
           <AppLayout />
-          <DisplayDrinks/>
-
+          {/* <DisplayDrinks/> */}
         </Grommet >
       </CartContext.Provider>
       </div>
