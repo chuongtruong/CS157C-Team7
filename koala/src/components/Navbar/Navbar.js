@@ -54,10 +54,10 @@ const Navbar = ({itemCount}) => {
 
                     <Box 
                         gridArea="cartIcon" 
-                        align='center' 
+                        align='end' 
                         direction='row' 
-                        justify='center' 
-                        gap='xsmall' 
+                        justify='end' 
+                        gap='xsmall'
                         >
                             {itemCount > 0 ? (
                             <Box>
