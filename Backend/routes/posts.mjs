@@ -94,12 +94,28 @@ router.get("/getToppings", async function (req, res) {
 
 
 // Create an order
-router.post("/createOrder",  (req, res) => {
-  console.log('Called');
-  console.log('Object received from request: ', req.body);
-  res.send({
-    'order_no': 123, //we wil need to generate this number automatically
-    
+router.post("/createOrder", async function (req, res) {
+  var OrderNumber;
+  fs.readFile('./readwritetesting/orderNumber.txt', function (err, data) {
+    if (err) throw err;
+    const originalInt = parseInt(data);
+    OrderNumber = originalInt + 1;
+    var newIntToString = String(OrderNumber);
+    fs.writeFile('./readwritetesting/orderNumber.txt', newIntToString, function (err, data) {
+      if (err) throw err;
+      else {
+        console.log("Value updated");
+      }
+    });
+    let collection = db.collection("Order");
+    var orderReq = req.body;
+    orderReq._id = OrderNumber;
+    collection.insertOne(orderReq);
+    console.log('Called');
+    console.log('Object received from request: ', req.body);
+    res.send({
+      'order_no': OrderNumber, //we wil need to generate this number automatically
+    })
   })
 })
 
