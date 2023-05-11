@@ -2,8 +2,6 @@ import { useState, createContext } from "react";
 
 import { Grommet } from 'grommet';
 import AppLayout from './components/AppLayout/AppLayout';
-import { SocketContext, socket } from './context/socket';
-import DisplayDrinks from './components/DisplayDrinks/DisplayDrinks.js';
 const theme = {
   global: {
     font: {
@@ -14,21 +12,24 @@ const theme = {
     },
   },
 }
-export const CartContext = createContext()
+
+export const CartContext = createContext();
+export const CategoryContext = createContext();
 
 function App() {
   const [itemInCart, setItemInCart] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("Brown Sugar");
+
   return (
-    // <SocketContext.Provider value={socket}>
     <div>
-      <CartContext.Provider value={[itemInCart, setItemInCart]}>
-        <Grommet theme={theme} full>
-          <AppLayout />
-          {/* <DisplayDrinks/> */}
-        </Grommet >
-      </CartContext.Provider>
+        <CategoryContext.Provider value={{selectedCategory, setSelectedCategory}}>
+          <CartContext.Provider value={[itemInCart, setItemInCart]}>
+            <Grommet theme={theme} full>
+              <AppLayout />
+            </Grommet>
+          </CartContext.Provider>
+        </CategoryContext.Provider>
       </div>
-    // </SocketContext.Provider>
   );
 }
 

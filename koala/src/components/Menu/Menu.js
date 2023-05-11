@@ -1,25 +1,34 @@
 /* eslint-disable */
 import { useContext, useEffect, useState } from 'react';
 import { Box, Spinner, Text } from 'grommet';
-import {SocketContext} from '../../context/socket';
 import { getAllDrinks } from '../../api/api';
 
 import ItemMenu from '../Item/ItemMenu';
-import { CartContext } from '../../App';
+import { CategoryContext } from '../../App';
 
 const Menu = ({handleCart}) => {
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
-    const socket = useContext(SocketContext);
+    const [itemsByCategory, setItemsByCategory] = useState([]);
+    const {selectedCategory, setSelectedCategory} = useContext(CategoryContext);
     
     
     useEffect(() => {
         Promise.all(getAllDrinks()
         .then(values => {
             setItems(values.data)
+            console.log(items);
         }))
     }, [])
+
+    useEffect(()=>{
+        let tempMenu = [];
+        if(selectedCategory === 'All'){
+            setItemsByCategory([...items]);
+        } else {
+            tempMenu =  items.filter(item => item.category === selectedCategory);
+            setItemsByCategory([...tempMenu])
+        }
+    },[selectedCategory, items])
 
     return(
         <Box
@@ -31,9 +40,9 @@ const Menu = ({handleCart}) => {
             pad="small"
         >
             {
-              items.length > 0 ? 
+              itemsByCategory.length > 0 ? 
               (
-                items.map(item => <ItemMenu handleCart={handleCart} key={item.id} data={item}/>)
+                itemsByCategory.map(item => <ItemMenu handleCart={handleCart} key={item.id} data={item}/>)
               ) 
               : 
               (

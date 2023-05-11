@@ -6,14 +6,12 @@ import { getAllDrinksCategories } from '../../api/api';
 
 const QuickAction = () => {
 
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState(["All"]);
 
     useEffect(() => {
         Promise.all(getAllDrinksCategories()
         .then(values => {
-           setCategories(values.data)
+            setCategories(["All", ...values.data])
         }))
     }, [])
 
@@ -22,7 +20,7 @@ const QuickAction = () => {
             // border={{size: 'xsmall' }}
             direction="row"
             gap='medium'
-            margin={{top: 'small', bottom: 'medium'}}
+            margin={{top: 'small', bottom: 'xsmall'}}
             pad={{top: 'medium', bottom: 'medium', left: 'small'}}
             overflow={{horizontal:'scroll'}}
         >

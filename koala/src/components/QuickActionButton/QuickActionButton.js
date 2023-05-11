@@ -1,21 +1,31 @@
-import { Box } from 'grommet';
-// import { useState, useEffect } from 'react';
+import { Box, Anchor } from 'grommet';
+import { CategoryContext } from '../../App';
+import { useContext } from 'react';
 
-const QuickActionButton = ({label = 'Test' }) => {
+const QuickActionButton = ({label}) => {
+    const {selectedCategory, setSelectedCategory} = useContext(CategoryContext);
+    
+    if(selectedCategory === label){
+
+    }
 
     return (
         <Box
             pad={{top:'xxsmall', bottom:'xxsmall', left:'small', right:'small'}}
             round='xsmall'
-            width={{min: '5rem'}}
-            height={{min:'2rem'}}
-            style={{fontSize:'15px', fontWeight: 'bold'}}
+            width={{min: '10rem'}}
+            height={{min:'3.5rem'}}
+            style={{
+                fontSize:'18px', 
+                fontWeight: 'bold',
+                background: label === selectedCategory ? '#EEFFAA' : 'white'
+            }}
             elevation="medium"
             align='center'
             justify='center'
+            onClick={()=>setSelectedCategory(label)}
         >
-            
-            {label}
+                {label}
         </Box>
     );
 };

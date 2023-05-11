@@ -30,7 +30,6 @@ const Cart = ({ item }) => {
         if (drinksObject.hasOwnProperty(item._id)) {
             drinksObject[item._id]['quantity'] += 1
             drinksObject[item._id]['price'] = (item.price * drinksObject[item._id]['quantity']).toFixed(2)
-
         } else {
             drinksObject[item._id] = {
                 'name': item.name,
@@ -66,9 +65,9 @@ const Cart = ({ item }) => {
         setSuccessMsgOpen(true);
         await setTimeout(() => {
             setSuccessMsgOpen(undefined);
+            setItemInCart([]);
         }, 5000);
-
-        console.log('response is: ', JSON.stringify(responseJSON, null, 4));
+        
     };
 
     const closeBtnHdler = () => {
@@ -106,15 +105,16 @@ const Cart = ({ item }) => {
                 onClick={placeOrderBtnHandler}
                 elevation='medium'
                 round='medium'
-                pad="small"
+                pad="medium"
                 align='center'
                 justify='center'
                 background={{
                     color: '#EEFFAA'
                 }}
+                
             >
                 <Text
-                    size='xxlarge'
+                    size='xlarge'
                 >
                     Pay
                 </Text>

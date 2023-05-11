@@ -2,11 +2,15 @@
 import { useState, useContext } from 'react';
 import { CartContext } from '../../App';
 import { useParams } from 'react-router-dom';
-import { Box, Grid, Text, Anchor, Layer, Button } from 'grommet';
+import { Box, Grid, Text, Anchor, Layer, Button, Image } from 'grommet';
 import { AddCircle, FormClose, StatusGood } from 'grommet-icons';
 
 const ItemMenu = ({ data, handleCart }) => {
-    const { name, desc, price, calories, url, category, item_Id } = data
+    const { name, description, price, calories, photo_url, item_Id } = data
+    if (!calories){
+        console.log(data)
+    }
+    
     const [open, setOpen] = useState();
     const [selectedItem, setSelectedItem] = useState();
     const [cartCtxt, setCartDetail] = useContext(CartContext);
@@ -27,7 +31,7 @@ const ItemMenu = ({ data, handleCart }) => {
     return (
         <Box
             width='90vw'
-            height={{ min: '50px' }}
+            height={{ min: '200px' }}
             margin={{ bottom: 'medium' }}
             background={{ color: '#F1F1F1' }}
             round='medium'
@@ -36,40 +40,34 @@ const ItemMenu = ({ data, handleCart }) => {
             justify='center'
             elevation="medium"
         >
+            
             <Grid
                 fill
                 areas={[
-                    { name: 'item-name', start: [0, 0], end: [0, 0] },
-                    { name: 'price', start: [1, 0], end: [1, 0] },
-                    { name: 'calories', start: [2, 0], end: [2, 0] },
-                    { name: 'add-btn', start: [3, 0], end: [4, 0] },
+                   
                 ]}
-                columns={['1/4', 'flex']}
+                columns={['1/3', 'flex']}
                 rows={['flex']}
-                gap="xsmall"
-            // border={'bottom'}
+                gap="medium"
+                // border={'bottom'}
             >
-
-                <Box justify='center' align='start' gridArea="item-name">
+                <Box height={{ max: '180px' }} round='small' overflow='hidden'>
+                    <Image
+                        fit="cover"
+                        src={`${photo_url}`}
+                    />
+                </Box>
+                <Box>
                     <Text size='small'>
-                        <h3>{name}</h3>
+                        <h2 style={{color:'#5C5C5C'}}>{name}</h2>
+                        <h4 style={{color:'#FF0000'}}>${price} | {calories} cal. </h4>
+                        <p style={{color:'#5C5C5C'}}>{description}</p>
                     </Text>
-                </Box>
-                <Box justify='center' align='center' gridArea="price">
-                    <Text color='red' size='small'>
-                        <h3>${price}</h3>
-                    </Text>
-                </Box>
-                <Box justify='center' align='center' gridArea="calories">
-                    <Text color='green' size='small'>
-                        <h3>{calories} cal.</h3>
-                    </Text>
-                </Box>
-                <Box justify='center' align='end' gridArea="add-btn">
                     <Anchor onClick={() => addBtnHdler(name, item_Id)}>
                         <AddCircle color='plain' size='30px' />
                     </Anchor>
                 </Box>
+                
                 
             </Grid>
             {open && (
@@ -97,7 +95,7 @@ const ItemMenu = ({ data, handleCart }) => {
                                 <Text weight='bold'>{selectedItem}</Text> {' \n'}was added to cart.
                             </Text>
                         </Box>
-                        <Button icon={<FormClose />} onClick={onClose} plain />
+                        <Button icon={<FormClose/>} onClick={onClose} plain />
                     </Box>
                 </Layer>
             )}

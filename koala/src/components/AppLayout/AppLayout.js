@@ -15,8 +15,7 @@ import {
 
 const AppLayout = () => {
     
-    const [itemInCart, setItemInCart] = useContext(CartContext)
-    console.log('length: ', itemInCart.length, itemInCart);
+    const [itemInCart] = useContext(CartContext)
     return (
         <Router>
             <Page kind='narrow'>

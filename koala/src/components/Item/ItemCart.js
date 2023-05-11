@@ -8,19 +8,17 @@ import { FormClose } from 'grommet-icons';
 const ItemCart = ({item}) => {
     
     const { name, quantity, price, id } = item
-    const [ cartCtxt, setCartDetail] = useContext(CartContext);
+    console.log("_Id: ", id);
+
+    const [ itemInCart, setItemInCart] = useContext(CartContext);
     
-    const addBtnHdler = (itemName, itemID) => {
-        setCartDetail(currentItems => [...currentItems, itemID])
-        setOpen(true);
-        handleCart(data)
-        setTimeout(() => {
-            setOpen(undefined);
-            setSelectedItem(undefined);
-        }, 3000);
-    };
     const onClose = () => setOpen(undefined);
-    const minusBtnHdler = () => {}
+    const closeBtnHdler = (id) => {
+        let tmpCart = itemInCart.filter(item => item._id !== id);
+        console.log("Id: ", id);
+        console.log("Temp Cart: ", tmpCart, id);
+        setItemInCart(tmpCart);
+    }
 
     return (
 
@@ -38,11 +36,10 @@ const ItemCart = ({item}) => {
                 columns={['xxsmall', 'flex', 'xxsmall', 'xxsmall']}
                 rows={['flex']}
                 gap="xsmall"
-                // border={'bottom'}
             >
 
                 <Box justify='center' align='start' gridArea="close-btn">
-                    <Anchor onClick={() => closeBtnHdler()}>
+                    <Anchor onClick={() => closeBtnHdler(id)}>
                         <FormClose color='plain' size='30px' />
                     </Anchor>
                 </Box>

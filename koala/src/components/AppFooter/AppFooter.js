@@ -2,6 +2,7 @@
 import { Box, Grid, Anchor, Text, Avatar, Stack } from 'grommet';
 import { Cart } from 'grommet-icons';
 import { useNavigate } from "react-router-dom";
+import { FaLinkedin } from 'react-icons/fa';
 
 const AppFooter = ({ table_number = '1', items, itemCount }) => {
     let navigate = useNavigate();
@@ -10,48 +11,54 @@ const AppFooter = ({ table_number = '1', items, itemCount }) => {
     }
     return (
         <Box
-            elevation="large"
             pad={{top: 'small', bottom: 'small', left: 'large', right:'large'}}
-            round='large'
-            height={{min:'6vh', max: '10vh'}}
+            round='small'
+            height={{min:'6vh', max: '6vh'}}
             justify='center'
-            style={{position: 'absolute', minWidth: '98%', zIndex: '1', top:'90%'}}
-            background={{color: 'white'}}
+            alight='center'
+            style={{position: 'absolute', minWidth: '98%', top:'100%'}}
         >
             <Grid
                 rows={
-                    ['']
+                    ['','']
                 }
                 columns={
                     [
                         ['medium'],
                         ['medium'],
+                        ['medium'],
                     ]
                 }
                 areas={[
-                    { name: 'tableNumber', start: [0, 0], end: [0, 0] },
-                    { name: 'cartButton', start: [1, 0], end: [1, 0] },
+                    { name: 'slogan', start: [0, 0], end: [2, 0] },
+                    { name: 'profile1', start: [0, 1], end: [0, 1] },
+                    { name: 'profile2', start: [1, 1], end: [1, 1] },
+                    { name: 'profile3', start: [2, 1], end: [2, 1] },
                 ]}
 
                 round={{ size: 'medium', corner: 'bottom' }}
                 align='center'                
             >
-                <Box>
-                    <Text weight='bold' gridArea="tableNumber" >Table: {table_number}</Text>
+                <Box  gridArea="slogan"  align='center' justify='center'>
+                     <Text weight='bold'>❤ Boba is life ❤</Text>
+                </Box >
+                <Box  direction='row' align='center' justify='center'>
+                    <FaLinkedin 
+                      style={{'cursor': 'pointer', 'font-size': '16px'}} 
+                      onClick={()=>{window.open('YOUR_LINKEDIN_URL')}}/>
+                     <Text size='15px' gridArea="profile1" > - Alicia Le</Text>
+                </Box >
+                <Box  direction='row'  align='center' justify='center'>
+                    <FaLinkedin 
+                        style={{'cursor': 'pointer', 'font-size': '16px'}} 
+                        onClick={()=>{window.open('YOUR_LINKEDIN_URL')}}/>
+                    <Text size='15px' gridArea="profile2" > - Christopher Tom</Text>
                 </Box>
-
-                <Box align='center'  direction='row' justify='end' gap='xsmall'>
-                    {itemCount > 0 ? 
-                    (
-                        <Avatar  size='small' background="red">{itemCount}</Avatar>)
-                    :
-                        <></>
-                    }
-                    <Anchor onClick={cartBtnHdler}>
-                        <Stack>
-                            <Cart color='plain' size='30px' />
-                        </Stack>
-                    </Anchor>
+                <Box direction='row'  align='center' justify='center'>
+                    <FaLinkedin 
+                        style={{'cursor': 'pointer', 'font-size': '16px'}} 
+                        onClick={()=>{window.open('YOUR_LINKEDIN_URL')}}/>
+                    <Text size='15px' gridArea="profile2" > - Chuong Truong</Text>
                 </Box>
             </Grid>
         </Box>
